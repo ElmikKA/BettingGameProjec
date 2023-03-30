@@ -34,7 +34,6 @@ public class GameController {
         this.resultRepository = resultRepository;
         this.playerRepository = playerRepository;
         this.betValidationService = betValidationService;
-
         this.gameService = gameService;
     }
 
@@ -51,6 +50,4 @@ public class GameController {
            return ResponseEntity.badRequest().build();
         }
     }
-
-
 }

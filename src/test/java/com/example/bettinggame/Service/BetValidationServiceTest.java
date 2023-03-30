@@ -3,42 +3,41 @@ package com.example.bettinggame.Service;
 import com.example.bettinggame.Exeption.InvalidBetException;
 import com.example.bettinggame.Moduls.Bet;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class BetValidationServiceTest {
-    private BetValidationService betValidationService = new BetValidationService();
+    @Mock
+    private Bet bet;
+
+    @InjectMocks
+    private BetValidationService betValidationService;
 
     @Test
     void validateBetWithInvalidNumberThrowsException() {
-        Bet bet = new Bet();
-        bet.setSelectedNumber(0);
-        bet.setBetAmount(10);
-
-        assertThrows(InvalidBetException.class, () -> {
-            betValidationService.validateBet(bet);
-        });
+        lenient().when(bet.getSelectedNumber()).thenReturn(0);
+        assertThrows(InvalidBetException.class, () -> betValidationService.validateBet(bet));
     }
 
     @Test
     void validateBetWithInvalidAmountThrowsException() {
-        Bet bet = new Bet();
-        bet.setBetAmount(0);
-        bet.setSelectedNumber(10);
-
-        assertThrows(InvalidBetException.class, () -> {
-            betValidationService.validateBet(bet);
-        });
+        when(bet.getSelectedNumber()).thenReturn(10);
+        when(bet.getBetAmount()).thenReturn(0.0);
+        assertThrows(InvalidBetException.class, () -> betValidationService.validateBet(bet));
     }
 
     @Test
     void validateBetWithValidInputDoesNotThrowException() {
-        Bet bet = new Bet();
-        bet.setBetAmount(10);
-        bet.setSelectedNumber(10);
-
-        assertDoesNotThrow(() -> {
-            betValidationService.validateBet(bet);
-        });
+        when(bet.getSelectedNumber()).thenReturn(10);
+        when(bet.getBetAmount()).thenReturn(10.0);
+        assertDoesNotThrow(() -> betValidationService.validateBet(bet));
     }
-
 }
