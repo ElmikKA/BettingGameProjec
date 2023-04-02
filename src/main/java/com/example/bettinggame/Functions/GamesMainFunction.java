@@ -1,36 +1,39 @@
 package com.example.bettinggame.Functions;
 
-import com.example.bettinggame.Controllers.GameController;
 import com.example.bettinggame.Models.Bet;
 import com.example.bettinggame.Models.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import com.example.bettinggame.Repository.BetRepository;
+import com.example.bettinggame.Repository.ResultRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import java.security.SecureRandom;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-@Service
+@Slf4j
+@RequiredArgsConstructor
+@Component
 public class GamesMainFunction {
 
-    private final Logger logger = LoggerFactory.getLogger(GameController.class);
+    final private RandomNumberGenerator randomNumberGenerator;
     final private WinCalculation winCalculation;
-
-    public GamesMainFunction(WinCalculation winCalculation) {
-        this.winCalculation = winCalculation;
-    }
+    final private ResultRepository resultRepository;
+    final private BetRepository betRepository;
 
     public Result playGame(Bet bet) {
-        int randomNumber = ThreadLocalRandom.current().nextInt(1, 101);
+        SecureRandom secureNumber = randomNumberGenerator.randomNumberGenerator();
+        int randomNumber = secureNumber.nextInt(1, 101);
         double win = 0;
         Result result = new Result(win);
         if (bet.getSelectedNumber() > randomNumber) {
             win = winCalculation.calculateWin(bet);
             result.setWinAmount(win);
-            logger.info("You have Won " + win + " Dollars!");
+            log.info("You have Won " + win + " Dollars!");
         } else {
-            logger.info("You have lost");
+            log.info("You have lost");
         }
+        betRepository.save(bet);
+        resultRepository.save(result);
 
         return result;
     }

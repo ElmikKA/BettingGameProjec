@@ -21,17 +21,14 @@ public class BetService {
         return betRepository.findAll();
     }
 
-    //getBetByID
     public Bet getBetById(Long id) {
         return betRepository.findById(id).orElse(null);
     }
 
-    //saveBet
     public Bet saveBet(Bet bet) {
         return betRepository.save(bet);
     }
 
-    //deleteBetById
     public void deleteBetById(Long id) {
         betRepository.deleteById(id);
     }

@@ -22,9 +22,6 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api")
 public class GameController {
-
-    private final ResultRepository resultRepository;
-    private final BetRepository betRepository;
     private final BetValidation betValidation;
     private final GamesMainFunction gamesMainFunction;
     private final BetService betService;
@@ -32,9 +29,7 @@ public class GameController {
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
 
 
-    public GameController(ResultRepository resultRepository, BetRepository betRepository, BetValidation betValidation, GamesMainFunction gamesMainFunction, BetService betService, ResultService resultService) {
-        this.resultRepository = resultRepository;
-        this.betRepository = betRepository;
+    public GameController(BetValidation betValidation, GamesMainFunction gamesMainFunction, BetService betService, ResultService resultService) {
         this.betValidation = betValidation;
         this.gamesMainFunction = gamesMainFunction;
         this.betService = betService;
@@ -56,8 +51,6 @@ public class GameController {
         try{
             betValidation.validateBet(bet);
             Result result = gamesMainFunction.playGame(bet);
-            betRepository.save(bet);
-            resultRepository.save(result);
             return ResponseEntity.ok(result);
         } catch (InvalidBetException e) {
            logger.info("Invalid bet: " + e.getMessage());

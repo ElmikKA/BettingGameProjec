@@ -8,9 +8,11 @@ public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "win")
     private double winAmount;
 
+    public Result () {
+
+    }
 
     public Result(double winAmount) {
         this.winAmount = winAmount;

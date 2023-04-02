@@ -2,9 +2,9 @@ package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Exeption.InvalidBetException;
 import com.example.bettinggame.Models.Bet;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class BetValidation {
 
     public void validateBet(Bet bet) throws InvalidBetException {

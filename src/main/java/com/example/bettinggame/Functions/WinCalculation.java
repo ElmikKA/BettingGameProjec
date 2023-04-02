@@ -1,9 +1,9 @@
 package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Models.Bet;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class WinCalculation {
 
     public double calculateWin(Bet bet){

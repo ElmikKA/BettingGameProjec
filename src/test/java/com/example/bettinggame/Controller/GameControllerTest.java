@@ -25,12 +25,6 @@ import static org.mockito.Mockito.*;
 public class GameControllerTest {
 
     @Mock
-    private ResultRepository resultRepository;
-
-    @Mock
-    private BetRepository betRepository;
-
-    @Mock
     private BetValidation betValidation;
 
     @Mock
@@ -42,7 +36,7 @@ public class GameControllerTest {
 
     @BeforeEach
     public void setup() {
-        gameController = new GameController(resultRepository, betRepository, betValidation, gamesMainFunction, betService, resultService);
+        gameController = new GameController(betValidation, gamesMainFunction, betService, resultService);
     }
 
     @Test
@@ -50,14 +44,10 @@ public class GameControllerTest {
         Bet bet = new Bet(50.0, 42);
         Result result = new Result(100.0);
         when(gamesMainFunction.playGame(bet)).thenReturn(result);
-        when(betRepository.save(bet)).thenReturn(bet);
-        when(resultRepository.save(result)).thenReturn(result);
 
         ResponseEntity<Result> response = gameController.bet(bet);
 
         verify(betValidation, times(1)).validateBet(bet);
-        verify(betRepository, times(1)).save(bet);
-        verify(resultRepository, times(1)).save(result);
         assertEquals(result, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -71,8 +61,6 @@ public class GameControllerTest {
         ResponseEntity<Result> response = gameController.bet(bet);
 
         verify(betValidation, times(1)).validateBet(bet);
-        verify(betRepository, times(0)).save(bet);
-        verify(resultRepository, times(0)).save(any(Result.class));
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
