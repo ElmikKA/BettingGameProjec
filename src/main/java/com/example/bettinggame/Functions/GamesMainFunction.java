@@ -1,9 +1,8 @@
-package com.example.bettinggame.Service;
+package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Controllers.GameController;
-import com.example.bettinggame.Exeption.InvalidBetException;
-import com.example.bettinggame.Moduls.Bet;
-import com.example.bettinggame.Moduls.Result;
+import com.example.bettinggame.Models.Bet;
+import com.example.bettinggame.Models.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,13 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class GameService {
+public class GamesMainFunction {
 
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
-    final private WinCalculationService winCalculationService;
+    final private WinCalculation winCalculation;
 
-    public GameService(WinCalculationService winCalculationService) {
-        this.winCalculationService = winCalculationService;
+    public GamesMainFunction(WinCalculation winCalculation) {
+        this.winCalculation = winCalculation;
     }
 
     public Result playGame(Bet bet) {
@@ -26,7 +25,7 @@ public class GameService {
         double win = 0;
         Result result = new Result(win);
         if (bet.getSelectedNumber() > randomNumber) {
-            win = winCalculationService.calculateWin(bet);
+            win = winCalculation.calculateWin(bet);
             result.setWin(win);
             logger.info("You have Won " + win + " Dollars!");
         } else {

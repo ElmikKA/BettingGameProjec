@@ -1,4 +1,5 @@
 package com.example.bettinggame.Moduls;
+import com.example.bettinggame.Models.Result;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

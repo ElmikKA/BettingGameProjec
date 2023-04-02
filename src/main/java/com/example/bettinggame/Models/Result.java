@@ -1,4 +1,4 @@
-package com.example.bettinggame.Moduls;
+package com.example.bettinggame.Models;
 
 import jakarta.persistence.*;
 
@@ -12,7 +12,7 @@ public class Result {
     private double win;
 
 
-    public Result(double wi) {
+    public Result(double win) {
         this.win = win;
     }
 

@@ -1,12 +1,12 @@
 package com.example.bettinggame.Controllers;
 
 import com.example.bettinggame.Exeption.InvalidBetException;
-import com.example.bettinggame.Moduls.Bet;
-import com.example.bettinggame.Moduls.Result;
+import com.example.bettinggame.Models.Bet;
+import com.example.bettinggame.Models.Result;
 import com.example.bettinggame.Repository.PlayerRepository;
 import com.example.bettinggame.Repository.ResultRepository;
-import com.example.bettinggame.Service.BetValidationService;
-import com.example.bettinggame.Service.GameService;
+import com.example.bettinggame.Functions.BetValidation;
+import com.example.bettinggame.Functions.GamesMainFunction;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,23 +25,23 @@ public class GameController {
 
     private final ResultRepository resultRepository;
     private final PlayerRepository playerRepository;
-    private final BetValidationService betValidationService;
-    private final GameService gameService;
+    private final BetValidation betValidation;
+    private final GamesMainFunction gamesMainFunction;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
 
 
-    public GameController(ResultRepository resultRepository, PlayerRepository playerRepository, BetValidationService betValidationService, GameService gameService) {
+    public GameController(ResultRepository resultRepository, PlayerRepository playerRepository, BetValidation betValidation, GamesMainFunction gamesMainFunction) {
         this.resultRepository = resultRepository;
         this.playerRepository = playerRepository;
-        this.betValidationService = betValidationService;
-        this.gameService = gameService;
+        this.betValidation = betValidation;
+        this.gamesMainFunction = gamesMainFunction;
     }
 
     @PostMapping("/play")
     public ResponseEntity<Result> bet(@RequestBody Bet bet) {
         try{
-            betValidationService.validateBet(bet);
-            Result result = gameService.playGame(bet);
+            betValidation.validateBet(bet);
+            Result result = gamesMainFunction.playGame(bet);
             playerRepository.save(bet);
             resultRepository.save(result);
             return ResponseEntity.ok(result);

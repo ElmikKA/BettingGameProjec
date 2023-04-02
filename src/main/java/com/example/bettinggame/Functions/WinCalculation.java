@@ -1,10 +1,10 @@
-package com.example.bettinggame.Service;
+package com.example.bettinggame.Functions;
 
-import com.example.bettinggame.Moduls.Bet;
+import com.example.bettinggame.Models.Bet;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WinCalculationService {
+public class WinCalculation {
 
     public double calculateWin(Bet bet){
         double chance = 99.0 / (100 - bet.getSelectedNumber());

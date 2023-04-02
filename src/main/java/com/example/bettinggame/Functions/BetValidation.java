@@ -1,11 +1,11 @@
-package com.example.bettinggame.Service;
+package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Exeption.InvalidBetException;
-import com.example.bettinggame.Moduls.Bet;
+import com.example.bettinggame.Models.Bet;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BetValidationService {
+public class BetValidation {
 
     public void validateBet(Bet bet) throws InvalidBetException {
         if(bet.getSelectedNumber() < 1 || bet.getSelectedNumber() > 100){
