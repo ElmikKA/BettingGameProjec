@@ -4,10 +4,12 @@ import com.example.bettinggame.Controllers.GameController;
 import com.example.bettinggame.Exeption.InvalidBetException;
 import com.example.bettinggame.Models.Bet;
 import com.example.bettinggame.Models.Result;
-import com.example.bettinggame.Repository.PlayerRepository;
+import com.example.bettinggame.Repository.BetRepository;
 import com.example.bettinggame.Repository.ResultRepository;
 import com.example.bettinggame.Functions.BetValidation;
 import com.example.bettinggame.Functions.GamesMainFunction;
+import com.example.bettinggame.Service.BetService;
+import com.example.bettinggame.Service.ResultService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,19 +28,21 @@ public class GameControllerTest {
     private ResultRepository resultRepository;
 
     @Mock
-    private PlayerRepository playerRepository;
+    private BetRepository betRepository;
 
     @Mock
     private BetValidation betValidation;
 
     @Mock
     private GamesMainFunction gamesMainFunction;
+    private BetService betService;
+    private ResultService resultService;
 
     private GameController gameController;
 
     @BeforeEach
     public void setup() {
-        gameController = new GameController(resultRepository, playerRepository, betValidation, gamesMainFunction);
+        gameController = new GameController(resultRepository, betRepository, betValidation, gamesMainFunction, betService, resultService);
     }
 
     @Test
@@ -46,13 +50,13 @@ public class GameControllerTest {
         Bet bet = new Bet(50.0, 42);
         Result result = new Result(100.0);
         when(gamesMainFunction.playGame(bet)).thenReturn(result);
-        when(playerRepository.save(bet)).thenReturn(bet);
+        when(betRepository.save(bet)).thenReturn(bet);
         when(resultRepository.save(result)).thenReturn(result);
 
         ResponseEntity<Result> response = gameController.bet(bet);
 
         verify(betValidation, times(1)).validateBet(bet);
-        verify(playerRepository, times(1)).save(bet);
+        verify(betRepository, times(1)).save(bet);
         verify(resultRepository, times(1)).save(result);
         assertEquals(result, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -67,7 +71,7 @@ public class GameControllerTest {
         ResponseEntity<Result> response = gameController.bet(bet);
 
         verify(betValidation, times(1)).validateBet(bet);
-        verify(playerRepository, times(0)).save(bet);
+        verify(betRepository, times(0)).save(bet);
         verify(resultRepository, times(0)).save(any(Result.class));
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }

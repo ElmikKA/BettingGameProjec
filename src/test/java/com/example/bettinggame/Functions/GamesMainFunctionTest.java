@@ -1,4 +1,4 @@
-package com.example.bettinggame.Service;
+package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Functions.GamesMainFunction;
 import com.example.bettinggame.Functions.WinCalculation;
@@ -29,14 +29,14 @@ public class GamesMainFunctionTest {
         when(winCalculation.calculateWin(bet)).thenReturn(20.0);
         Result result = gamesMainFunction.playGame(bet);
         verify(winCalculation).calculateWin(bet);
-        assertEquals(20.0, result.getWin(),0.01);
+        assertEquals(20.0, result.getWinAmount(),0.01);
     }
 
     @Test
     void playGame_losingBet_returnsResultWithZeroWin() throws InvalidBetException{
         Bet bet = new Bet(10.0, 50);
         Result result = gamesMainFunction.playGame(bet);
-        assertEquals(0.0, result.getWin(), 0.01);
+        assertEquals(0.0, result.getWinAmount(), 0.01);
     }
 
 

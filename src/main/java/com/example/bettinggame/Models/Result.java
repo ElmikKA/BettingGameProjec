@@ -9,11 +9,11 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "win")
-    private double win;
+    private double winAmount;
 
 
-    public Result(double win) {
-        this.win = win;
+    public Result(double winAmount) {
+        this.winAmount = winAmount;
     }
 
     public Long getId() {
@@ -24,18 +24,18 @@ public class Result {
         this.id = id;
     }
 
-    public double getWin() {
-        return win;
+    public double getWinAmount() {
+        return winAmount;
     }
 
-    public void setWin(double win) {
-        this.win = win;
+    public void setWinAmount(double winAmount) {
+        this.winAmount = winAmount;
     }
 
     @Override
     public String toString() {
         return "Result{" +
-                "win=" + win +
+                "win=" + winAmount +
                 '}';
     }
 }

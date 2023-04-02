@@ -17,8 +17,8 @@ public class ResultTest {
     @Test
     public void testGetWin() {
         double win = 50.0;
-        when(result.getWin()).thenReturn(win);
-        assertEquals(win, result.getWin());
+        when(result.getWinAmount()).thenReturn(win);
+        assertEquals(win, result.getWinAmount());
     }
 
     @Test
@@ -26,7 +26,7 @@ public class ResultTest {
         double win = 0;
         Result result = new Result(win);
         win = 100;
-        result.setWin(win);
-        assertEquals(win, result.getWin());
+        result.setWinAmount(win);
+        assertEquals(win, result.getWinAmount());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.bettinggame.Service;
+package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Functions.BetValidation;
 import com.example.bettinggame.Exeption.InvalidBetException;

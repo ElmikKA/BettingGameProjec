@@ -26,7 +26,7 @@ public class GamesMainFunction {
         Result result = new Result(win);
         if (bet.getSelectedNumber() > randomNumber) {
             win = winCalculation.calculateWin(bet);
-            result.setWin(win);
+            result.setWinAmount(win);
             logger.info("You have Won " + win + " Dollars!");
         } else {
             logger.info("You have lost");

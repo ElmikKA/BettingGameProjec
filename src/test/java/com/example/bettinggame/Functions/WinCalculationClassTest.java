@@ -1,4 +1,4 @@
-package com.example.bettinggame.Service;
+package com.example.bettinggame.Functions;
 
 import com.example.bettinggame.Functions.WinCalculation;
 import com.example.bettinggame.Models.Bet;
