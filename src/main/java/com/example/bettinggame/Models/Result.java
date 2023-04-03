@@ -1,9 +1,13 @@
 package com.example.bettinggame.Models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Result")
+@Getter
+@Setter
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,27 +17,9 @@ public class Result {
     public Result () {
 
     }
-
     public Result(double winAmount) {
         this.winAmount = winAmount;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getWinAmount() {
-        return winAmount;
-    }
-
-    public void setWinAmount(double winAmount) {
-        this.winAmount = winAmount;
-    }
-
     @Override
     public String toString() {
         return "Result{" +

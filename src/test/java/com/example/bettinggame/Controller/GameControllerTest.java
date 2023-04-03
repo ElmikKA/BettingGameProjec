@@ -4,8 +4,6 @@ import com.example.bettinggame.Controllers.GameController;
 import com.example.bettinggame.Exeption.InvalidBetException;
 import com.example.bettinggame.Models.Bet;
 import com.example.bettinggame.Models.Result;
-import com.example.bettinggame.Repository.BetRepository;
-import com.example.bettinggame.Repository.ResultRepository;
 import com.example.bettinggame.Functions.BetValidation;
 import com.example.bettinggame.Functions.GamesMainFunction;
 import com.example.bettinggame.Service.BetService;
@@ -18,6 +16,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -29,7 +31,9 @@ public class GameControllerTest {
 
     @Mock
     private GamesMainFunction gamesMainFunction;
+    @Mock
     private BetService betService;
+    @Mock
     private ResultService resultService;
 
     private GameController gameController;
@@ -38,6 +42,32 @@ public class GameControllerTest {
     public void setup() {
         gameController = new GameController(betValidation, gamesMainFunction, betService, resultService);
     }
+
+    @Test
+    void testGetAllBets() {
+        Bet bet1 = new Bet(20.0, 20);
+        Bet bet2 = new Bet(50.0, 30);
+        List<Bet> expectedBets = Arrays.asList(bet1, bet2);
+
+        when(betService.getAllBets()).thenReturn(expectedBets);
+
+        List<Bet> actualBets = gameController.getAllBets();
+
+        assertEquals(expectedBets, actualBets);
+    }
+    @Test
+    public void testGetAllResults() {
+        List<Result> expectedResults = new ArrayList<Result>();
+        expectedResults.add(new Result(10));
+        expectedResults.add(new Result(20));
+
+        when(resultService.getAllResults()).thenReturn(expectedResults);
+
+        List<Result> actualResults = gameController.getAllResults();
+
+        assertEquals(expectedResults, actualResults);
+    }
+
 
     @Test
     public void testValidBet() throws InvalidBetException {

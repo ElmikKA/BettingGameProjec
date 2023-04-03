@@ -1,44 +1,30 @@
 package com.example.bettinggame.Functions;
 
-import com.example.bettinggame.Functions.BetValidation;
 import com.example.bettinggame.Exeption.InvalidBetException;
 import com.example.bettinggame.Models.Bet;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
-
-@ExtendWith(MockitoExtension.class)
 public class BetValidationTest {
-    @Mock
-    private Bet bet;
-
-    @InjectMocks
-    private BetValidation betValidation;
+    private final BetValidation betValidation = new BetValidation();
 
     @Test
-    void validateBetWithInvalidNumberThrowsException() {
-        lenient().when(bet.getSelectedNumber()).thenReturn(0);
-        assertThrows(InvalidBetException.class, () -> betValidation.validateBet(bet));
-    }
-
-    @Test
-    void validateBetWithInvalidAmountThrowsException() {
-        when(bet.getSelectedNumber()).thenReturn(10);
-        when(bet.getBetAmount()).thenReturn(0.0);
-        assertThrows(InvalidBetException.class, () -> betValidation.validateBet(bet));
-    }
-
-    @Test
-    void validateBetWithValidInputDoesNotThrowException() {
-        when(bet.getSelectedNumber()).thenReturn(10);
-        when(bet.getBetAmount()).thenReturn(10.0);
+    public void testValidBet() {
+        Bet bet = new Bet(10.0, 50);
         assertDoesNotThrow(() -> betValidation.validateBet(bet));
+    }
+
+    @Test
+    public void testInvalidNumber() {
+        Bet bet = new Bet(10.0, 0);
+        InvalidBetException exception = assertThrows(InvalidBetException.class, () -> betValidation.validateBet(bet));
+        assertEquals("Number must be between 1 and 100", exception.getMessage());
+    }
+
+    @Test
+    public void testInvalidAmount() {
+        Bet bet = new Bet(-5.0, 10);
+        InvalidBetException exception = assertThrows(InvalidBetException.class, () -> betValidation.validateBet(bet));
+        assertEquals("Bet must be greater than 0.", exception.getMessage());
     }
 }

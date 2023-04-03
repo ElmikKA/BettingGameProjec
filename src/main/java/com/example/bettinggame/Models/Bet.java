@@ -8,8 +8,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Bet {
 
     @Id
@@ -26,30 +30,6 @@ public class Bet {
 
     public Bet(double betAmount, int selectedNumber) {
         this.betAmount = betAmount;
-        this.selectedNumber = selectedNumber;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getBetAmount() {
-        return betAmount;
-    }
-
-    public void setBetAmount(double betAmount) {
-        this.betAmount = betAmount;
-    }
-
-    public int getSelectedNumber() {
-        return selectedNumber;
-    }
-
-    public void setSelectedNumber(int selectedNumber) {
         this.selectedNumber = selectedNumber;
     }
 
