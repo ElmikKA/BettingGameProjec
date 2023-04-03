@@ -19,17 +19,14 @@ public class ResultService {
         return resultRepository.findAll();
     }
 
-    //findResultById
     public Result findById(Long id) {
         return resultRepository.findById(id).orElse(null);
     }
 
-    //saveResult
     public Result saveResult(Result result) {
         return resultRepository.save(result);
     }
 
-    // deleteById
     public void deletedResultById(Long id) {
         resultRepository.deleteById(id);
     }

@@ -1,11 +1,7 @@
 package com.example.bettinggame.Functions;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import java.security.SecureRandom;
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RandomNumberGeneratorTest {

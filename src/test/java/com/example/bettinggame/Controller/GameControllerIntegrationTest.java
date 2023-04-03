@@ -48,7 +48,6 @@ public class GameControllerIntegrationTest {
     }
     @Test
     void testBet_WithValidBet_ShouldReturnAllBets() {
-        // Add some test data to the database
         betService.saveBet(new Bet(20.0, 20));
         betService.saveBet(new Bet(50.0, 30));
 
